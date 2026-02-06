@@ -19,7 +19,7 @@
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.88);
       padding: 40px 30px;
       border-radius: 25px;
       box-shadow: 0 15px 35px rgba(255, 105, 180, 0.35);
@@ -45,8 +45,6 @@
       display: flex;
       justify-content: center;
       gap: 20px;
-      position: relative;
-      height: 60px;
     }
 
     button {
@@ -69,12 +67,15 @@
       transform: scale(1.07);
     }
 
+    /* NO button can move anywhere */
     #noBtn {
       background: #fff;
       color: #ff1493;
       border: 2px solid #ff1493;
-      position: absolute;
-      right: 0;
+      position: fixed;
+      left: 55%;
+      top: 55%;
+      z-index: 9999;
     }
 
     .hearts {
@@ -113,7 +114,6 @@
 </head>
 
 <body>
-
   <div class="hearts" id="hearts"></div>
 
   <div class="card">
@@ -134,12 +134,12 @@
     const msg = document.getElementById("msg");
     const hearts = document.getElementById("hearts");
 
-    // Floating hearts generator
+    // Floating kiss + red heart generator
     function createHeart() {
       const heart = document.createElement("div");
       heart.classList.add("heart");
 
-      const heartTypes = ["💗", "💖", "💘", "💕", "💞"];
+      const heartTypes = ["💋", "❤️"];
       heart.innerHTML = heartTypes[Math.floor(Math.random() * heartTypes.length)];
 
       heart.style.left = Math.random() * 100 + "vw";
@@ -148,34 +148,34 @@
 
       hearts.appendChild(heart);
 
-      setTimeout(() => {
-        heart.remove();
-      }, 7000);
+      setTimeout(() => heart.remove(), 7000);
     }
 
     setInterval(createHeart, 250);
 
-    // Make NO button run away
+    // Make NO button run away anywhere on screen
     function moveNoButton() {
-      const padding = 30;
+      const padding = 20;
+
       const maxX = window.innerWidth - noBtn.offsetWidth - padding;
       const maxY = window.innerHeight - noBtn.offsetHeight - padding;
 
-      const x = Math.random() * maxX;
-      const y = Math.random() * maxY;
+      const x = Math.floor(Math.random() * maxX);
+      const y = Math.floor(Math.random() * maxY);
 
       noBtn.style.left = x + "px";
       noBtn.style.top = y + "px";
     }
 
-    // Runs away on hover
+    // Runs away on hover AND when you try to click it
     noBtn.addEventListener("mouseover", moveNoButton);
+    noBtn.addEventListener("mousedown", moveNoButton);
 
-    // Disappears if clicked
+    // If somehow clicked, it disappears
     noBtn.addEventListener("click", () => {
       noBtn.style.display = "none";
       msg.style.display = "block";
-      msg.innerHTML = "NO vanished 😭💀 so I guess it’s YES 💘";
+      msg.innerHTML = "NO escaped 😭💀 so I guess it’s YES 💘";
     });
 
     // YES button reaction
@@ -183,7 +183,11 @@
       msg.style.display = "block";
       msg.innerHTML = "YAYYYY!! 💞💞 You’re my Valentine!! 💘🌸";
     });
-  </script>
 
+    // Start NO button in a random spot
+    window.onload = () => {
+      moveNoButton();
+    };
+  </script>
 </body>
 </html>
