@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Valentine's Day 💘</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      background: linear-gradient(135deg, #ffb6c1, #ffd1dc, #ffe4f2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 40px 30px;
+      border-radius: 25px;
+      box-shadow: 0 15px 35px rgba(255, 105, 180, 0.35);
+      max-width: 420px;
+      position: relative;
+      z-index: 10;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      color: #ff1493;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #d63384;
+      margin-top: 10px;
+    }
+
+    .buttons {
+      margin-top: 25px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      position: relative;
+    }
+
+    button {
+      border: none;
+      padding: 14px 24px;
+      font-size: 1.1rem;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+      font-weight: bold;
+    }
+
+    #yesBtn {
+      background: #ff4da6;
+      color: white;
+      box-shadow: 0 8px 20px rgba(255, 20, 147, 0.35);
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.07);
+    }
+
+    #noBtn {
+      background: #fff;
+      color: #ff1493;
+      border: 2px solid #ff1493;
+      position: absolute;
+      right: 0;
+    }
+
+    .hearts {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 22px;
+      opacity: 0.85;
+      animation: floatUp 6s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) scale(1);
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.4);
+        opacity: 0;
+      }
+    }
+
+    .message {
+      margin-top: 18px;
+      font-size: 1.3rem;
+      color: #ff1493;
+      font-weight: bold;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hearts" id="hearts"></div>
+
+  <div class="card">
+    <h1>Happy Valentine’s Day 💖</h1>
+    <p>Will you be my Valentine? 🥺🌸</p>
+
+    <div class="buttons">
+      <button id="yesBtn">YES 💘</button>
+      <button id="noBtn">NO 😭</button>
+    </div>
+
+    <div class="message" id="msg">YAYYY!! 💞💞💞</div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const msg = document.getElementById("msg");
+    const hearts = document.getElementById("hearts");
+
+    // Make hearts float
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = ["💗","💖","💘","💕","💞"][Math.floor(Math.random() * 5)];
+
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (16 + Math.random() * 28) + "px";
+      heart.style.animationDuration = (3 + Math.random() * 4) + "s";
+
+      hearts.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 7000);
+    }
+
+    setInterval(createHeart, 250);
+
+    // NO button runs away
+    function moveNoButton() {
+      const padding = 30;
+      const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+      const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+
+    // Run away when hovered or clicked
+    noBtn.addEventListener("mouseover", moveNoButton);
+    noBtn.addEventListener("click", moveNoButton);
+
+    // YES button reaction
+    yesBtn.addEventListener("click", () => {
+      msg.style.display = "block";
+      msg.innerHTML = "YAYYY!! 💞💞 You’re my Valentine!! 💘";
+    });
+  </script>
+
+</body>
+</html>
